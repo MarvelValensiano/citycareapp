@@ -1,8 +1,5 @@
 import { reportMapper } from '../../data/api-mapper';
-import {
-  saveDataToReportStore,
-  getAllDataFromReportStore,
-} from '../../utils/indexed-db';
+import { saveDataToReportStore, getAllDataFromReportStore } from '../../utils/indexed-db';
 
 export default class HomePresenter {
   #view;
@@ -38,21 +35,27 @@ export default class HomePresenter {
       if (navigator.onLine) {
         try {
           console.log('Online: Mencoba mengambil data laporan dari API...');
-          const response = await this.#model.getAllReports();
+          const response = await this.#model.getAllStories();
 
-          if (response.ok && response.data) {
-            reports = await Promise.all(response.data.map(reportMapper));
+          if (response.ok && response.listStory) {
+            reports = await Promise.all(response.listStory.map(reportMapper));
             apiMessage = response.message || 'Data laporan berhasil dimuat dari server.';
             console.log('Data laporan berhasil diambil dari API, menyimpan ke IndexedDB...');
             for (const report of reports) {
               await saveDataToReportStore(report);
             }
           } else {
-            console.warn('Gagal mengambil data dari API, mencoba dari cache. Pesan API:', response.message);
+            console.warn(
+              'Gagal mengambil data dari API, mencoba dari cache. Pesan API:',
+              response.message,
+            );
             fromCache = true;
           }
         } catch (networkError) {
-          console.error('Kesalahan jaringan saat mengambil data API, mencoba dari cache:', networkError);
+          console.error(
+            'Kesalahan jaringan saat mengambil data API, mencoba dari cache:',
+            networkError,
+          );
           fromCache = true;
         }
       } else {
@@ -63,13 +66,17 @@ export default class HomePresenter {
       if (fromCache) {
         reports = await getAllDataFromReportStore();
         if (reports.length > 0) {
-          apiMessage = navigator.onLine ? 'Gagal terhubung ke server, data ditampilkan dari cache.' : 'Anda offline, data ditampilkan dari cache.';
+          apiMessage = navigator.onLine
+            ? 'Gagal terhubung ke server, data ditampilkan dari cache.'
+            : 'Anda offline, data ditampilkan dari cache.';
           console.log('Data laporan berhasil dimuat dari IndexedDB cache.');
         } else {
-          apiMessage = navigator.onLine ? 'Gagal mengambil data dari server dan cache kosong.' : 'Anda offline dan tidak ada data laporan tersimpan di cache.';
+          apiMessage = navigator.onLine
+            ? 'Gagal mengambil data dari server dan cache kosong.'
+            : 'Anda offline dan tidak ada data laporan tersimpan di cache.';
         }
       }
-      
+
       // Panggil initialMap di sini agar peta siap sebelum reports di-populate (jika ada marker)
       await this.showReportsListMap();
 
@@ -86,7 +93,10 @@ export default class HomePresenter {
       try {
         const cachedReports = await getAllDataFromReportStore();
         if (cachedReports.length > 0) {
-          this.#view.populateReportsList('Terjadi kesalahan, menampilkan data dari cache.', cachedReports);
+          this.#view.populateReportsList(
+            'Terjadi kesalahan, menampilkan data dari cache.',
+            cachedReports,
+          );
         }
       } catch (cacheError) {
         console.error('Gagal memuat dari cache setelah error utama:', cacheError);

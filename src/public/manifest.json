@@ -1,84 +1,83 @@
 {
-    "name": "CityCare App",
-    "short_name": "CityCare",
-    "description": "Aplikasi pelaporan kerusakan fasilitas umum yang memungkinkan warga Indonesia melaporkan masalah secara langsung kepada pemerintah kota.",
-    "start_url": "/index.html",
-    "display": "standalone",
-    "background_color": "#f0f4f8",
-    "theme_color": "#6a11cb",
-    "icons": [
-      {
-        "src": "images/logo-72x72.png",
-        "sizes": "72x72",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "images/logo-96x96.png",
-        "sizes": "96x96",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "images/logo-128x128.png",
-        "sizes": "128x128",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "images/logo-144x144.png",
-        "sizes": "144x144",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "images/logo-152x152.png",
-        "sizes": "152x152",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "images/logo-192x192.png",
-        "sizes": "192x192",
-        "type": "image/png",
-        "purpose": "any maskable"
-      },
-      {
-        "src": "images/logo-384x384.png",
-        "sizes": "384x384",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "images/logo-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "any maskable"
-      }
-    ],
-    "shortcuts": [
-      {
-        "name": "Buat Laporan Baru",
-        "short_name": "Lapor Baru",
-        "description": "Buka halaman untuk membuat laporan kerusakan fasilitas baru.",
-        "url": "/#/new",
-        "icons": [{ "src": "images/shortcut-new-report-96x96.png", "sizes": "96x96" }]
-      }
-    ],
-    "screenshots": [
-      {
-        "src": "images/screenshots/citycare-desktop-1.png",
-        "sizes": "1280x720",
-        "type": "image/png",
-        "form_factor": "wide",
-        "label": "Tampilan Daftar Laporan CityCare di Desktop"
-      },
-      {
-        "src": "images/screenshots/citycare-mobile-1.png",
-        "sizes": "720x1280",
-        "type": "image/png",
-        "form_factor": "narrow",
-        "label": "Tampilan Detail Laporan CityCare di Mobile"
-      }
-    ]
-  }
+  "name": "CityCare App",
+  "short_name": "CityCare",
+  "description": "Aplikasi pelaporan kerusakan fasilitas umum yang memungkinkan warga Indonesia melaporkan masalah secara langsung kepada pemerintah kota.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#6a11cb",
+  "icons": [
+    {
+      "src": "images/logo-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/logo-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buat Laporan Baru",
+      "short_name": "Lapor Baru",
+      "description": "Buka halaman untuk membuat laporan kerusakan fasilitas baru.",
+      "url": "/#/new",
+      "icons": [
+        {
+          "src": "images/shortcut-new-report-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshots/citycare-desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tampilan Daftar Laporan CityCare di Desktop"
+    },
+    {
+      "src": "images/screenshots/citycare-mobile-1.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tampilan Detail Laporan CityCare di Mobile"
+    }
+  ]
+}

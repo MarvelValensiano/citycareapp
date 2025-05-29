@@ -30,52 +30,8 @@ export default class NewPage {
       <section class="container">
         <div class="new-form__container">
           <form id="new-form" class="new-form">
-            <div class="form-control">
-              <label for="title-input" class="new-form__title__title">Judul Laporan</label>
-    
-              <div class="new-form__title__container">
-                <input
-                  id="title-input"
-                  name="title"
-                  placeholder="Masukkan judul laporan"
-                  aria-describedby="title-input-more-info"
-                >
-              </div>
-              <div id="title-input-more-info">Pastikan judul laporan dibuat dengan jelas dan deskriptif dalam 1 kalimat.</div>
-            </div>
-            <div class="form-control">
-              <div class="new-form__damage-level__title">Tingkat Kerusakan</div>
-    
-              <div class="new-form__damage-level__container">
-                <div class="new-form__damage-level__minor__container">
-                  <input id="damage-level-minor-input" type="radio" name="damageLevel" value="minor">
-                  <label for="damage-level-minor-input">
-                    Rendah
-                    <span title="Contoh: Lubang kecil di jalan, kerusakan ringan pada tanda lalu lintas, dll.">
-                      <i class="far fa-question-circle"></i>
-                    </span>
-                  </label>
-                </div>
-                <div class="new-form__damage-level__moderate__container">
-                  <input id="damage-level-moderate-input" type="radio" name="damageLevel" value="moderate">
-                  <label for="damage-level-moderate-input">
-                    Sedang
-                    <span title="Contoh: Jalan retak besar, trotoar amblas, lampu jalan mati, dll.">
-                      <i class="far fa-question-circle"></i>
-                    </span>
-                  </label>
-                </div>
-                <div class="new-form__damage-level__severe__container">
-                  <input id="damage-level-severe-input" type="radio" name="damageLevel" value="severe">
-                  <label for="damage-level-severe-input">
-                    Berat
-                    <span title="Contoh: Jembatan ambruk, tiang listrik roboh, longsor yang menutup jalan, dll.">
-                      <i class="far fa-question-circle"></i>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
+            
+            
             <div class="form-control">
               <label for="description-input" class="new-form__description__title">Keterangan</label>
     
@@ -171,8 +127,6 @@ export default class NewPage {
       event.preventDefault();
 
       const data = {
-        title: this.#form.elements.namedItem('title').value,
-        damageLevel: this.#form.elements.namedItem('damageLevel').value,
         description: this.#form.elements.namedItem('description').value,
         evidenceImages: this.#takenDocumentations.map((picture) => picture.blob),
         latitude: this.#form.elements.namedItem('latitude').value,

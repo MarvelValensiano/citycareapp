@@ -35,7 +35,7 @@ export function generateAuthenticatedNavigationListTemplate() {
   `;
 }
 
-export function generateReportsListEmptyTemplate(message = "Tidak ada laporan yang tersedia") {
+export function generateReportsListEmptyTemplate(message = 'Tidak ada laporan yang tersedia') {
   return `
     <div id="reports-list-empty" class="reports-list__empty">
       <h2>${message.includes('Tidak ada laporan') ? 'Tidak ada laporan yang tersedia' : 'Info'}</h2>
@@ -89,12 +89,13 @@ export function generateReportItemTemplate({
   createdAt,
   placeNameLocation,
 }) {
+  console.log(evidenceImages);
   return `
     <div tabindex="0" class="report-item" data-reportid="${id}">
-      <img class="report-item__image" src="${evidenceImages[0]}" alt="${title}">
+      <img class="report-item__image" src="${evidenceImages}" alt="${reporterName}">
       <div class="report-item__body">
         <div class="report-item__main">
-          <h2 id="report-title" class="report-item__title">${title}</h2>
+          <h2 id="report-title" class="report-item__title">${reporterName}</h2>
           <div class="report-item__more-info">
             <div class="report-item__createdat">
               <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, 'id-ID')}
@@ -195,11 +196,7 @@ export function generateReportDetailTemplate({
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, 'id-ID');
   const damageLevelBadge = generateDamageLevelBadge(damageLevel);
-  const imagesHtml = evidenceImages.reduce(
-    (accumulator, evidenceImage) =>
-      accumulator.concat(generateReportDetailImageTemplate(evidenceImage, title)),
-    '',
-  );
+  const imagesHtml = generateReportDetailImageTemplate(evidenceImages, title);
 
   return `
     <div class="report-detail__header">
@@ -211,8 +208,8 @@ export function generateReportDetailTemplate({
           <div id="location-place-name" class="report-detail__location__place-name" data-value="${location.placeName}"><i class="fas fa-map"></i></div>
         </div>
         <div class="report-detail__more-info__inline">
-          <div id="location-latitude" class="report-detail__location__latitude" data-value="${location.latitude}">Latitude:</div>
-          <div id="location-longitude" class="report-detail__location__longitude" data-value="${location.longitude}">Longitude:</div>
+          <div id="location-latitude" class="report-detail__location__latitude" data-value="${location.lat}">Latitude:</div>
+          <div id="location-longitude" class="report-detail__location__longitude" data-value="${location.lon}">Longitude:</div>
         </div>
         <div id="author" class="report-detail__author" data-value="${reporterName}">Dilaporkan oleh:</div>
       </div>

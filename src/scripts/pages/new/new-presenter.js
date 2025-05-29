@@ -18,18 +18,16 @@ export default class NewPresenter {
     }
   }
 
-  async postNewReport({ title, damageLevel, description, evidenceImages, latitude, longitude }) {
+  async postNewReport({ description, evidenceImages, latitude, longitude }) {
     this.#view.showSubmitLoadingButton();
     try {
       const data = {
-        title: title,
-        damageLevel: damageLevel,
         description: description,
-        evidenceImages: evidenceImages,
-        latitude: latitude,
-        longitude: longitude,
+        photo: evidenceImages,
+        lat: latitude,
+        lon: longitude,
       };
-      const response = await this.#model.storeNewReport(data);
+      const response = await this.#model.storeNewStory(data);
 
       if (!response.ok) {
         console.error('postNewReport: response:', response);

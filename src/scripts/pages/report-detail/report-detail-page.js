@@ -29,25 +29,7 @@ export default class ReportDetailPage {
         </div>
       </section>
       
-      <section class="container">
-        <hr>
-        <div class="report-detail__comments__container">
-          <div class="report-detail__comments-form__container">
-            <h2 class="report-detail__comments-form__title">Beri Tanggapan</h2>
-            <form id="comments-list-form" class="report-detail__comments-form__form">
-              <textarea name="body" placeholder="Beri tanggapan terkait laporan."></textarea>
-              <div id="submit-button-container">
-                <button class="btn" type="submit">Tanggapi</button>
-              </div>
-            </form>
-          </div>
-          <hr>
-          <div class="report-detail__comments-list__container">
-            <div id="report-detail-comments-list"></div>
-            <div id="comments-list-loading-container"></div>
-          </div>
-        </div>
-      </section>
+      
     `;
   }
 
@@ -60,19 +42,19 @@ export default class ReportDetailPage {
     this.#setupForm();
 
     await this.#presenter.showReportDetail();
-    await this.#presenter.getCommentsList();
+    // await this.#presenter.getCommentsList();
   }
 
   async populateReportDetailAndInitialMap(message, report) {
     const reportDetailEl = document.getElementById('report-detail');
     if (reportDetailEl) {
       reportDetailEl.innerHTML = generateReportDetailTemplate({
-        title: report.title,
+        title: report.name,
         description: report.description,
         damageLevel: report.damageLevel,
-        evidenceImages: report.evidenceImages,
+        evidenceImages: report.photoUrl,
         location: report.location,
-        reporterName: report.reporter.name,
+        reporterName: report.name,
         createdAt: report.createdAt,
       });
     }
@@ -83,16 +65,18 @@ export default class ReportDetailPage {
     }
 
     if (this.#presenter) {
-        await this.#presenter.showReportDetailMap();
+      await this.#presenter.showReportDetailMap();
     }
-    
+
     if (this.#map) {
-      const reportCoordinate = [report.location.latitude, report.location.longitude];
+      const reportCoordinate = [report.lat, report.lon];
       const markerOptions = { alt: report.title };
       const popupOptions = { content: report.title };
 
       this.#map.changeCamera(reportCoordinate);
-      this.#map.addMarker(reportCoordinate, markerOptions, popupOptions);
+
+      if (report.lat || report.lon)
+        this.#map.addMarker(reportCoordinate, markerOptions, popupOptions);
     }
 
     this.addNotifyMeEventListener();
@@ -113,7 +97,9 @@ export default class ReportDetailPage {
 
         const subscription = await getSubscription();
         if (!subscription) {
-          alert('Anda belum berlangganan notifikasi atau izin notifikasi diblokir. Silakan subscribe/cek izin dari menu navigasi atau pengaturan browser.');
+          alert(
+            'Anda belum berlangganan notifikasi atau izin notifikasi diblokir. Silakan subscribe/cek izin dari menu navigasi atau pengaturan browser.',
+          );
           return;
         }
 
@@ -122,20 +108,20 @@ export default class ReportDetailPage {
         // Jika VAPID key di push-notification.js kosong/salah, `subscribePush` akan gagal dan `getSubscription()` akan null.
 
         alert('Mencoba mengirim notifikasi untuk laporan ini...');
-        try {
-          const response = await CityCareAPI.sendReportToMeViaNotification(reportId);
-          if (response.ok) {
-            alert('Permintaan notifikasi terkirim! Anda akan menerima notifikasi jika server berhasil memprosesnya.');
-          } else {
-            alert(`Gagal mengirim permintaan notifikasi: ${response.message}`);
-          }
-        } catch (error) {
-          alert(`Error saat mengirim permintaan notifikasi: ${error.message}`);
-          console.error('Error sending notify me request:', error);
-        }
+        // try {
+        //   const response = await CityCareAPI.sendReportToMeViaNotification(reportId);
+        //   if (response.ok) {
+        //     alert('Permintaan notifikasi terkirim! Anda akan menerima notifikasi jika server berhasil memprosesnya.');
+        //   } else {
+        //     alert(`Gagal mengirim permintaan notifikasi: ${response.message}`);
+        //   }
+        // } catch (error) {
+        //   alert(`Error saat mengirim permintaan notifikasi: ${error.message}`);
+        //   console.error('Error sending notify me request:', error);
+        // }
       });
     } else {
-        console.warn("Tombol 'report-detail-notify-me' tidak ditemukan.");
+      console.warn("Tombol 'report-detail-notify-me' tidak ditemukan.");
     }
   }
 
@@ -191,7 +177,7 @@ export default class ReportDetailPage {
         zoom: 15,
       });
     } else {
-      console.warn("Elemen #map untuk peta tidak ditemukan saat initialMap dipanggil.");
+      console.warn('Elemen #map untuk peta tidak ditemukan saat initialMap dipanggil.');
     }
   }
 
@@ -254,7 +240,9 @@ export default class ReportDetailPage {
           await this.#presenter.handleRemoveReport();
         });
       } else if (button) {
-        button.addEventListener('click', () => alert('Fungsi hapus dari simpanan sedang dikembangkan.'));
+        button.addEventListener('click', () =>
+          alert('Fungsi hapus dari simpanan sedang dikembangkan.'),
+        );
       }
     }
   }
@@ -291,7 +279,8 @@ export default class ReportDetailPage {
 
   showSubmitLoadingButton() {
     const el = document.getElementById('submit-button-container');
-    if (el) el.innerHTML = `
+    if (el)
+      el.innerHTML = `
       <button class="btn" type="submit" disabled>
         <i class="fas fa-spinner loader-button"></i> Tanggapi
       </button>
@@ -300,7 +289,8 @@ export default class ReportDetailPage {
 
   hideSubmitLoadingButton() {
     const el = document.getElementById('submit-button-container');
-    if (el) el.innerHTML = `
+    if (el)
+      el.innerHTML = `
       <button class="btn" type="submit">Tanggapi</button>
     `;
   }
