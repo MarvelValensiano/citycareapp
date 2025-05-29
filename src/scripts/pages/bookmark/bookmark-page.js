@@ -51,10 +51,10 @@ export default class BookmarkPage {
       // Pastikan properti yang dibutuhkan oleh generateReportItemTemplate tersedia
       const reportDataForTemplate = {
         id: report.id,
-        title: report.title || 'Tanpa Judul',
+        title: report.name || 'Tanpa Judul',
         description: report.description || 'Tidak ada deskripsi.',
         evidenceImages: report.photoUrl ? report.photoUrl : 'images/placeholder-image.jpg',
-        reporterName: report.reporter?.name || 'N/A',
+        reporterName: report.name || 'N/A',
         createdAt: report.createdAt || new Date().toISOString(),
         placeNameLocation:
           report.location?.placeName ||

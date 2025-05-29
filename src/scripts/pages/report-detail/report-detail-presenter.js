@@ -133,7 +133,7 @@ export default class ReportDetailPresenter {
     }
     try {
       await saveBookmark(this.#currentReportData);
-      alert(`Laporan "${this.#currentReportData.title || 'Tanpa Judul'}" telah disimpan.`);
+      alert(`Laporan "${this.#currentReportData?.name || 'Tanpa Judul'}" telah disimpan.`);
       await this.showSaveButton(); // Refresh tombol untuk menampilkan status "Remove"
     } catch (error) {
       alert(`Gagal menyimpan laporan: ${error.message}`);
