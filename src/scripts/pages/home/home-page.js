@@ -59,8 +59,8 @@ export default class HomePage {
     const html = reports.reduce((accumulator, report) => {
       if (this.#map) {
         const coordinate = [report.lat, report.lon];
-        const markerOptions = { alt: report.title };
-        const popupOptions = { content: report.title };
+        const markerOptions = { alt: report.name };
+        const popupOptions = { content: report.name };
 
         if (report.lat || report.lon) this.#map.addMarker(coordinate, markerOptions, popupOptions);
       }
@@ -69,7 +69,8 @@ export default class HomePage {
         generateReportItemTemplate({
           ...report,
           placeNameLocation: report.location.placeName,
-          reporterName: report.reporter.name,
+          reporterName: report.name,
+          evidenceImages: report.photoUrl,
         }),
       );
     }, '');

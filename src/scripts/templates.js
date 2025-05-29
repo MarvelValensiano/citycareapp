@@ -35,7 +35,7 @@ export function generateAuthenticatedNavigationListTemplate() {
   `;
 }
 
-export function generateReportsListEmptyTemplate(message = "Tidak ada laporan yang tersedia") {
+export function generateReportsListEmptyTemplate(message = 'Tidak ada laporan yang tersedia') {
   return `
     <div id="reports-list-empty" class="reports-list__empty">
       <h2>${message.includes('Tidak ada laporan') ? 'Tidak ada laporan yang tersedia' : 'Info'}</h2>
@@ -89,12 +89,13 @@ export function generateReportItemTemplate({
   createdAt,
   placeNameLocation,
 }) {
+  console.log(evidenceImages);
   return `
     <div tabindex="0" class="report-item" data-reportid="${id}">
-      <img class="report-item__image" src="${evidenceImages[0]}" alt="${title}">
+      <img class="report-item__image" src="${evidenceImages}" alt="${reporterName}">
       <div class="report-item__body">
         <div class="report-item__main">
-          <h2 id="report-title" class="report-item__title">${title}</h2>
+          <h2 id="report-title" class="report-item__title">${reporterName}</h2>
           <div class="report-item__more-info">
             <div class="report-item__createdat">
               <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, 'id-ID')}

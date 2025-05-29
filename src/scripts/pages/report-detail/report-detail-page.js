@@ -67,12 +67,12 @@ export default class ReportDetailPage {
     const reportDetailEl = document.getElementById('report-detail');
     if (reportDetailEl) {
       reportDetailEl.innerHTML = generateReportDetailTemplate({
-        title: report.title,
+        title: report.name,
         description: report.description,
         damageLevel: report.damageLevel,
-        evidenceImages: report.evidenceImages,
+        evidenceImages: report.photoUrl,
         location: report.location,
-        reporterName: report.reporter.name,
+        reporterName: report.name,
         createdAt: report.createdAt,
       });
     }

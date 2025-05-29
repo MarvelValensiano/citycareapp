@@ -40,24 +40,28 @@ export default class BookmarkPage {
     }
 
     if (!reports || reports.length <= 0) {
-      listContainer.innerHTML = generateReportsListEmptyTemplate('Anda belum menyimpan laporan apapun.');
+      listContainer.innerHTML = generateReportsListEmptyTemplate(
+        'Anda belum menyimpan laporan apapun.',
+      );
       return;
     }
-    
+
     let html = '';
-    reports.forEach(report => {
+    reports.forEach((report) => {
       // Pastikan properti yang dibutuhkan oleh generateReportItemTemplate tersedia
       const reportDataForTemplate = {
         id: report.id,
         title: report.title || 'Tanpa Judul',
         description: report.description || 'Tidak ada deskripsi.',
-        evidenceImages: report.evidenceImages && report.evidenceImages.length > 0 ? report.evidenceImages : ['images/placeholder-image.jpg'],
+        evidenceImages: report.photoUrl ? report.photoUrl : 'images/placeholder-image.jpg',
         reporterName: report.reporter?.name || 'N/A',
         createdAt: report.createdAt || new Date().toISOString(),
-        placeNameLocation: report.location?.placeName || `${report.location?.latitude || 'N/A'}, ${report.location?.longitude || 'N/A'}`,
+        placeNameLocation:
+          report.location?.placeName ||
+          `${report.location?.latitude || 'N/A'}, ${report.location?.longitude || 'N/A'}`,
       };
       const reportItemHtml = generateReportItemTemplate(reportDataForTemplate);
-      
+
       // Tambahkan tombol hapus ke dalam item laporan
       // Kita cari penutup dari elemen report-item, biasanya </div> yang paling akhir sebelum link Selengkapnya.
       // Ini mungkin perlu disesuaikan berdasarkan struktur generateReportItemTemplate Anda.
@@ -70,24 +74,29 @@ export default class BookmarkPage {
             <i class="fas fa-trash-alt"></i> Hapus dari Simpanan
           </button>
         </div>`;
-      
+
       // Masukkan tombol hapus sebelum link "Selengkapnya"
       let modifiedReportItemHtml = reportItemHtml;
       const readMoreIndex = modifiedReportItemHtml.indexOf(readMoreLink);
       if (readMoreIndex !== -1) {
-        modifiedReportItemHtml = modifiedReportItemHtml.substring(0, readMoreIndex) + deleteButtonHtml + modifiedReportItemHtml.substring(readMoreIndex);
+        modifiedReportItemHtml =
+          modifiedReportItemHtml.substring(0, readMoreIndex) +
+          deleteButtonHtml +
+          modifiedReportItemHtml.substring(readMoreIndex);
       } else {
         // Fallback jika link tidak ditemukan, tambahkan di akhir
         const closingDivIndex = modifiedReportItemHtml.lastIndexOf('</div>');
         if (closingDivIndex !== -1) {
-            modifiedReportItemHtml = modifiedReportItemHtml.substring(0, closingDivIndex) + deleteButtonHtml + modifiedReportItemHtml.substring(closingDivIndex);
+          modifiedReportItemHtml =
+            modifiedReportItemHtml.substring(0, closingDivIndex) +
+            deleteButtonHtml +
+            modifiedReportItemHtml.substring(closingDivIndex);
         } else {
-            modifiedReportItemHtml += deleteButtonHtml; // Tambah di akhir jika tidak ada div penutup
+          modifiedReportItemHtml += deleteButtonHtml; // Tambah di akhir jika tidak ada div penutup
         }
       }
       html += modifiedReportItemHtml;
     });
-
 
     listContainer.innerHTML = `<div class="reports-list">${html}</div>`;
 
@@ -95,7 +104,7 @@ export default class BookmarkPage {
       button.addEventListener('click', async (event) => {
         event.stopPropagation(); // Hindari navigasi jika tombol ada di dalam item yang bisa diklik
         const reportId = event.currentTarget.dataset.removebookmarkid;
-        const reportTitle = reports.find(r => r.id.toString() === reportId)?.title || reportId;
+        const reportTitle = reports.find((r) => r.id.toString() === reportId)?.title || reportId;
         if (confirm(`Anda yakin ingin menghapus laporan "${reportTitle}" dari simpanan?`)) {
           if (this.#presenter) {
             await this.#presenter.removeBookmark(reportId);
@@ -110,7 +119,7 @@ export default class BookmarkPage {
     if (listContainer) {
       listContainer.innerHTML = generateReportsListErrorTemplate(message);
     }
-     const infoContainer = document.getElementById('bookmark-info');
+    const infoContainer = document.getElementById('bookmark-info');
     if (infoContainer) {
       infoContainer.innerHTML = `<p class="error-message">${message}</p>`;
     }
