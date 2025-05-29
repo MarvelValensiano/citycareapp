@@ -29,7 +29,7 @@ export default class NewPresenter {
         latitude: latitude,
         longitude: longitude,
       };
-      const response = await this.#model.storeNewReport(data);
+      const response = await this.#model.storeNewStory(data);
 
       if (!response.ok) {
         console.error('postNewReport: response:', response);
