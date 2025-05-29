@@ -45,7 +45,8 @@ export default class HomePage {
     const reportsListContainer = document.getElementById('reports-list');
     if (!reportsListContainer) return;
 
-    if (!reports || reports.length <= 0) { // Tambahkan pengecekan !reports
+    if (!reports || reports.length <= 0) {
+      // Tambahkan pengecekan !reports
       this.populateReportsListEmpty(message || 'Tidak ada laporan yang tersedia saat ini.');
       return;
     }
@@ -57,11 +58,11 @@ export default class HomePage {
 
     const html = reports.reduce((accumulator, report) => {
       if (this.#map) {
-        const coordinate = [report.location.latitude, report.location.longitude];
+        const coordinate = [report.lat, report.lon];
         const markerOptions = { alt: report.title };
         const popupOptions = { content: report.title };
 
-        this.#map.addMarker(coordinate, markerOptions, popupOptions);
+        if (report.lat || report.lon) this.#map.addMarker(coordinate, markerOptions, popupOptions);
       }
 
       return accumulator.concat(
@@ -78,11 +79,12 @@ export default class HomePage {
     `;
   }
 
-  populateReportsListEmpty(message = 'Tidak ada laporan yang tersedia') { // Tambahkan parameter message
+  populateReportsListEmpty(message = 'Tidak ada laporan yang tersedia') {
+    // Tambahkan parameter message
     const reportsListContainer = document.getElementById('reports-list');
     if (reportsListContainer) {
-        // Modifikasi template empty untuk bisa menampilkan pesan custom
-        reportsListContainer.innerHTML = generateReportsListEmptyTemplate(message);
+      // Modifikasi template empty untuk bisa menampilkan pesan custom
+      reportsListContainer.innerHTML = generateReportsListEmptyTemplate(message);
     }
   }
 

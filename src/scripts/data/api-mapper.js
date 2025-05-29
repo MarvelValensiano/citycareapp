@@ -4,11 +4,9 @@ export async function reportMapper(report) {
   return {
     ...report,
     location: {
-      ...report.location,
-      placeName: await Map.getPlaceNameByCoordinate(
-        report.location.latitude,
-        report.location.longitude,
-      ),
+      ...report,
+      placeName:
+        report.lat || report.lon ? await Map.getPlaceNameByCoordinate(report.lat, report.lon) : '',
     },
   };
 }
