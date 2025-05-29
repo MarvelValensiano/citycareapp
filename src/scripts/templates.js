@@ -196,11 +196,7 @@ export function generateReportDetailTemplate({
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, 'id-ID');
   const damageLevelBadge = generateDamageLevelBadge(damageLevel);
-  const imagesHtml = evidenceImages.reduce(
-    (accumulator, evidenceImage) =>
-      accumulator.concat(generateReportDetailImageTemplate(evidenceImage, title)),
-    '',
-  );
+  const imagesHtml = generateReportDetailImageTemplate(evidenceImages, title);
 
   return `
     <div class="report-detail__header">
@@ -212,8 +208,8 @@ export function generateReportDetailTemplate({
           <div id="location-place-name" class="report-detail__location__place-name" data-value="${location.placeName}"><i class="fas fa-map"></i></div>
         </div>
         <div class="report-detail__more-info__inline">
-          <div id="location-latitude" class="report-detail__location__latitude" data-value="${location.latitude}">Latitude:</div>
-          <div id="location-longitude" class="report-detail__location__longitude" data-value="${location.longitude}">Longitude:</div>
+          <div id="location-latitude" class="report-detail__location__latitude" data-value="${location.lat}">Latitude:</div>
+          <div id="location-longitude" class="report-detail__location__longitude" data-value="${location.lon}">Longitude:</div>
         </div>
         <div id="author" class="report-detail__author" data-value="${reporterName}">Dilaporkan oleh:</div>
       </div>

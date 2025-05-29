@@ -76,31 +76,24 @@ export async function getStoryById(id) {
   };
 }
 
-export async function storeNewStory({
-  title,
-  damageLevel,
-  description,
-  evidenceImages,
-  latitude,
-  longitude,
-}) {
+export async function storeNewStory({ description, photo, lat, lon }) {
   const accessToken = getAccessToken();
 
   const formData = new FormData();
-  formData.set('title', title);
-  formData.set('damageLevel', damageLevel);
+
   formData.set('description', description);
-  formData.set('latitude', latitude);
-  formData.set('longitude', longitude);
-  evidenceImages.forEach((evidenceImage) => {
-    formData.append('evidenceImages', evidenceImage);
+  formData.set('lat', lat);
+  formData.set('lon', lon);
+  photo.forEach((evidenceImage) => {
+    formData.append('photo', evidenceImage);
   });
 
-  const fetchResponse = await fetch(ENDPOINTS.STORE_NEW_REPORT, {
+  const fetchResponse = await fetch(ENDPOINTS.STORIES, {
     method: 'POST',
     headers: { Authorization: `Bearer ${accessToken}` },
     body: formData,
   });
+
   const json = await fetchResponse.json();
 
   return {

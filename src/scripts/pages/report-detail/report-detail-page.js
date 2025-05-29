@@ -29,25 +29,7 @@ export default class ReportDetailPage {
         </div>
       </section>
       
-      <section class="container">
-        <hr>
-        <div class="report-detail__comments__container">
-          <div class="report-detail__comments-form__container">
-            <h2 class="report-detail__comments-form__title">Beri Tanggapan</h2>
-            <form id="comments-list-form" class="report-detail__comments-form__form">
-              <textarea name="body" placeholder="Beri tanggapan terkait laporan."></textarea>
-              <div id="submit-button-container">
-                <button class="btn" type="submit">Tanggapi</button>
-              </div>
-            </form>
-          </div>
-          <hr>
-          <div class="report-detail__comments-list__container">
-            <div id="report-detail-comments-list"></div>
-            <div id="comments-list-loading-container"></div>
-          </div>
-        </div>
-      </section>
+      
     `;
   }
 
@@ -60,7 +42,7 @@ export default class ReportDetailPage {
     this.#setupForm();
 
     await this.#presenter.showReportDetail();
-    await this.#presenter.getCommentsList();
+    // await this.#presenter.getCommentsList();
   }
 
   async populateReportDetailAndInitialMap(message, report) {
